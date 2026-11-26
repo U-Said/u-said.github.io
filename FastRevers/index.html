@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FastRevers — free keyboard layout switcher for Russian and English on Windows and macOS (formerly LiteSwitcher)</title>
+<meta name="description" content="Typed ghbdtn instead of привет? FastRevers retypes the word in the right keyboard layout and switches it. A tiny free app for Windows (x64 and Arm64) and macOS. Open source, no installer.">
+<link rel="canonical" href="https://u-said.github.io/FastRevers/">
+<link rel="icon" type="image/png" sizes="32x32" href="img/ls-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="img/ls-128.png">
+<link rel="apple-touch-icon" href="img/ls-192.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastRevers">
+<meta property="og:url" content="https://u-said.github.io/FastRevers/">
+<meta property="og:title" content="FastRevers — keyboard layout switcher for Russian and English">
+<meta property="og:description" content="Typed in the wrong layout? FastRevers retypes the word and switches the layout. Free and open source, for Windows and macOS.">
+<meta property="og:image" content="https://u-said.github.io/FastRevers/img/demo-en.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://u-said.github.io/FastRevers/#website",
+      "url": "https://u-said.github.io/FastRevers/",
+      "name": "FastRevers",
+      "alternateName": "LiteSwitcher",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://u-said.github.io/FastRevers/#app",
+      "name": "FastRevers",
+      "alternateName": "LiteSwitcher",
+      "url": "https://u-said.github.io/FastRevers/",
+      "description": "A lightweight keyboard layout switcher for Russian and English. It retypes a word typed in the wrong layout and switches the layout. Windows (x64, Arm64) and macOS.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Windows, macOS",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "license": "https://opensource.org/licenses/MIT",
+      "image": "https://u-said.github.io/FastRevers/img/ls-256.png",
+      "screenshot": "https://u-said.github.io/FastRevers/img/demo-en.png",
+      "downloadUrl": "https://github.com/U-Said/LiteSwitcher/releases/latest",
+      "publisher": { "@type": "Person", "name": "U-Said" },
+      "sameAs": ["https://github.com/U-Said/LiteSwitcher"]
+    }
+  ]
+}
+</script>
+<meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<style>
+/* FastRevers's own colours: the graphite of its toggle icon and the blue of its pictures. */
+:root {
+  --bg: #f3f5f8; --surface: #ffffff; --text: #18202b; --muted: #586373; --line: #dde3ea;
+  --primary: #3b4656; --primary-text: #ffffff; --primary-hover: #2b3441; --soft: #e8ecf1; --soft-hover: #dce2e9;
+  --link: #1f6fb0; --accent: #1f86c7; --mark: #e8f3fb; --key: #ffffff;
+  --shadow: 0 1px 2px rgba(20, 28, 40, .06), 0 8px 24px rgba(20, 28, 40, .07);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #11151b; --surface: #1a2029; --text: #e4e8ee; --muted: #9aa5b3; --line: #2a323e;
+    --primary: #c3ccd8; --primary-text: #18202b; --primary-hover: #dde3eb; --soft: #232a35; --soft-hover: #2c3441;
+    --link: #7cc4f0; --accent: #62bdf0; --mark: #16283a; --key: #262e3a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .28);
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.6 "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "SF Pro Text", Roboto, "Noto Sans", Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font: 0.92em/1.4 ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; background: var(--soft); padding: 1px 5px; border-radius: 5px; }
+kbd { font: 600 0.85em/1 ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; background: var(--key); border: 1px solid var(--line); border-bottom-width: 2px; padding: 2px 6px; border-radius: 5px; white-space: nowrap; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+.bar {
+  position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
+}
+[id] { scroll-margin-top: 84px; }
+.top { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 650; font-size: 19px; letter-spacing: -0.01em; }
+.brand:hover { text-decoration: none; }
+.brand img { width: 34px; height: 34px; transition: transform .3s cubic-bezier(.2, .9, .3, 1.4); }
+.brand:hover img { transform: scale(1.12); }
+.nav { display: flex; align-items: center; gap: 20px; font-size: 15px; }
+.nav a { color: var(--muted); }
+.nav a:hover { color: var(--text); text-decoration: none; }
+.nav a.cta { color: var(--text); font-weight: 600; border: 2px solid var(--accent); border-radius: 999px; padding: 5px 16px; transition: background-color .15s, color .15s; }
+.nav a.cta:hover { background: var(--accent); color: #fff; }
+.hero { padding: 48px 0 8px; text-align: center; }
+.kicker { margin: 0 0 12px; font-size: 13.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: clamp(1.9rem, 4.2vw, 3rem); line-height: 1.12; letter-spacing: -0.015em; font-weight: 700; margin: 0 auto 16px; max-width: 17em; }
+.lead { font-size: 1.2rem; color: var(--muted); max-width: 42em; margin: 0 auto; }
+.shot { margin: 36px auto 0; max-width: 900px; }
+.shot figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); }
+.renamed { max-width: 42em; margin: 16px auto 0; padding: 10px 14px; border-radius: 12px; background: var(--mark); border-left: 4px solid var(--accent); font-size: 15px; text-align: left; }
+.brand .tm-mark { align-self: flex-start; margin: 1px 0 0 -9px; font-size: 10px; font-weight: 600; color: var(--muted); }
+.shot img { display: block; width: 100%; height: auto; border-radius: 16px; box-shadow: var(--shadow); }
+section.block { padding: 56px 0 8px; }
+h2 { font-size: clamp(1.45rem, 2.6vw, 1.9rem); line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 12px; }
+.sub, .prose p { color: var(--muted); max-width: 46em; margin: 0 0 14px; font-size: 1.05rem; }
+.prose p b { color: var(--text); }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; list-style: none; padding: 0; margin: 22px 0 0; }
+.grid li { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: var(--shadow); }
+.grid .k { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; font-size: 14px; color: var(--muted); }
+.grid b { display: block; font-size: 17px; margin-bottom: 6px; }
+.grid span.t { color: var(--muted); font-size: 15px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 22px;
+  border-radius: 12px; font-size: 17px; font-weight: 600; white-space: nowrap;
+}
+.btn:hover { text-decoration: none; }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn.primary { background: var(--primary); color: var(--primary-text); box-shadow: 0 0 0 3px var(--surface), 0 0 0 5.5px var(--accent); }
+.btn.primary:hover { background: var(--primary-hover); }
+.btn.soft { background: var(--soft); color: var(--text); }
+.btn.soft:hover { background: var(--soft-hover); }
+/* The download card: the visitor's system first, its own steps, the other systems under it. */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 28px 32px; box-shadow: var(--shadow); text-align: center; }
+.for { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 19px; margin-bottom: 16px; }
+.for svg { width: 22px; height: 22px; color: var(--accent); }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.meta { font-size: 14px; color: var(--muted); margin-top: 14px; }
+.msg { margin: 0 0 14px; color: var(--muted); }
+.steps { margin: 22px auto 0; padding: 20px 0 0; border-top: 1px solid var(--line); list-style: none; counter-reset: s; text-align: left; max-width: 760px; }
+.steps li { counter-increment: s; position: relative; padding-left: 34px; margin: 0 0 12px; }
+.steps li::before {
+  content: counter(s); position: absolute; left: 0; top: 1px; width: 23px; height: 23px; border-radius: 50%;
+  background: var(--soft); color: var(--text); font-size: 12.5px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+.tip { margin: 16px auto 0; padding: 12px 16px; border-radius: 12px; background: var(--mark); border-left: 4px solid var(--accent); font-size: 14.5px; text-align: left; max-width: 760px; }
+.other { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14.5px; }
+.other .lbl { color: var(--muted); }
+.other a { padding: 4px 11px; border-radius: 8px; background: var(--soft); color: var(--text); font-weight: 500; }
+.other a:hover { background: var(--soft-hover); text-decoration: none; }
+.other a.on { background: var(--primary); color: var(--primary-text); }
+.faq { max-width: 820px; }
+.faq details { border-bottom: 1px solid var(--line); padding: 14px 0; }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 17px; list-style: none; position: relative; padding-right: 28px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; position: absolute; right: 4px; top: -2px; font-size: 22px; font-weight: 400; color: var(--muted); }
+.faq details[open] summary::after { content: '−'; }
+.faq p { margin: 10px 0 2px; color: var(--muted); }
+footer { margin-top: 72px; border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 14.5px; color: var(--muted); }
+footer .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; justify-content: space-between; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+footer a { color: var(--muted); }
+footer a:hover { color: var(--text); }
+footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .nav .hide-s { display: none; }
+  .card { padding: 22px 18px; }
+  .hero { padding-top: 32px; }
+}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap top">
+  <a class="brand" href="./"><img src="img/ls-128.png" alt="">FastRevers<sup class="tm-mark" aria-hidden="true">™</sup></a>
+  <nav class="nav">
+    <a class="cta" href="#dl">Download</a>
+    <a class="hide-s" href="#how">How it works</a>
+    <a class="hide-s" href="https://github.com/U-Said/LiteSwitcher">GitHub</a>
+  </nav>
+</div></header>
+
+<main>
+  <section class="wrap hero">
+    <p class="kicker">Keyboard layout switcher for Russian and English</p>
+    <h1>Typed in the wrong layout? FastRevers fixes it</h1>
+    <p class="lead">Typed <code>ghbdtn</code> when you meant «привет»? FastRevers notices it when you press Space, retypes the word and switches the layout. One small app for Windows and macOS: download, unzip, run.</p>
+    <p class="renamed"><b>FastRevers is the new name of LiteSwitcher.</b> Version 2.1.0 still uses the old name in its files, its menu and its settings; the next release will be called FastRevers.</p>
+    <figure class="shot"><img src="img/demo-en.png" width="1200" height="560" alt="Version 2.1.0, still named LiteSwitcher, turns ghbdtn into привет and руддщ into hello; its tray menu"><figcaption>Version 2.1.0 is still called LiteSwitcher.</figcaption></figure>
+  </section>
+
+  <section class="wrap block" id="dl">
+    <div class="card" id="dl-card">
+      <noscript>
+        <div class="btns">
+          <a class="btn soft" href="https://github.com/U-Said/LiteSwitcher/releases/latest/download/LiteSwitcher-Windows.zip">Windows (x64)</a>
+          <a class="btn soft" href="https://github.com/U-Said/LiteSwitcher/releases/latest/download/LiteSwitcher-Windows-arm64.zip">Windows on Arm</a>
+          <a class="btn soft" href="https://github.com/U-Said/LiteSwitcher/releases/latest/download/LiteSwitcher-macOS.zip">macOS</a>
+        </div>
+      </noscript>
+    </div>
+  </section>
+
+  <section class="wrap block" id="how">
+    <h2>How it works</h2>
+    <p class="sub">No dictionary and nothing to set up: FastRevers judges each word by Russian and English spelling rules and lists of common words.</p>
+    <ul class="grid">
+      <li><div class="k"><kbd>Space</kbd> or <kbd>Return</kbd> on a Mac</div><b>Fixes on its own</b><span class="t">Typed a word in the wrong layout? Press Space: FastRevers retypes it and switches the layout.</span></li>
+      <li><div class="k"><kbd>Shift</kbd> <kbd>Shift</kbd> · <kbd>Pause</kbd> on Windows</div><b>Fix it yourself</b><span class="t">A double Shift converts the last word. Press it again to put it back.</span></li>
+      <li><div class="k"><kbd>Shift</kbd>+<kbd>Pause</kbd> · double Shift on a Mac</div><b>Selected text</b><span class="t">Converts the selection to the other layout, then restores your clipboard.</span></li>
+      <li><div class="k">Undo a fix</div><b>It learns</b><span class="t">Undo a wrong fix with a double Shift, and FastRevers adds the word to its exceptions and leaves it alone.</span></li>
+      <li><div class="k">Terminals</div><b>Stays out of the way</b><span class="t">Auto-switching is off in terminals. Exclude any other app with an <code>@app_name</code> line in the exceptions.</span></li>
+      <li><div class="k">Under 1 MB</div><b>Small and native</b><span class="t">One native app for Windows x64, Windows on Arm and macOS. No installer, no admin rights, nothing else to install.</span></li>
+    </ul>
+  </section>
+
+  <section class="wrap block" id="privacy">
+    <h2>What it keeps, and where</h2>
+    <div class="prose">
+      <p>Keystrokes are kept <b>in memory only, for the current word</b>. On disk FastRevers writes only its own data: its settings (<code>LiteSwitcher.ini</code> on Windows, the app’s preferences on a Mac), the exceptions file <code>exceptions.txt</code>, where words whose fix you undid are added as plain text, and the start-at-login entry if you turn it on.</p>
+      <p>It sends nothing over the network: <b>there is no network code</b>, and a browser opens only from the “Support the project…” menu item. To convert selected text, FastRevers copies it via the clipboard, like <kbd>Ctrl</kbd>+<kbd>C</kbd>, and then restores the previous contents. If Windows clipboard history (<kbd>Win</kbd>+<kbd>V</kbd>) or its sync is on, the copied fragment may be saved there (on a Mac, in clipboard managers); the converted text is marked so that it is not.</p>
+      <p>Password fields: macOS hides their keystrokes from FastRevers. On Windows FastRevers skips classic password boxes; it cannot detect password fields in browsers, but a word is only fixed after Space, and passwords rarely contain spaces.</p>
+    </div>
+  </section>
+
+  <section class="wrap block" id="faq">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details><summary>Which layouts does it work with?</summary><p>Russian and English. On a Mac you need an English input source (ABC or U.S.) and Russian or Russian – PC.</p></details>
+      <details><summary>Is FastRevers free?</summary><p>Yes. It is free, has no ads, and its source code is open under the MIT license on <a href="https://github.com/U-Said/LiteSwitcher">GitHub</a>.</p></details>
+      <details><summary>Will it fix every word?</summary><p>No. There is no dictionary, so misses and false positives are possible. Fix a missed word with a double Shift; undo a wrong fix the same way, and the word goes to the exceptions.</p></details>
+      <details><summary>Does it run on Windows on Arm?</summary><p>Yes. There is a native Arm64 build for Windows 11 on Snapdragon PCs, such as the Snapdragon models of Surface Pro and Surface Laptop.</p></details>
+      <details><summary>Does it need admin rights?</summary><p>No. On Windows it runs from any folder you choose. On a Mac it needs your permission in Privacy &amp; Security → Accessibility to see the keys you type.</p></details>
+      <details><summary>Is there a version for Linux, Android or iPhone?</summary><p>Not at the moment: FastRevers is for Windows and macOS.</p></details>
+      <details><summary>Something does not work as it should.</summary><p>Please tell us in <a href="https://github.com/U-Said/LiteSwitcher/issues">GitHub Issues</a>.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <span>© 2026 U-Said · MIT license</span>
+      <nav>
+        <a href="https://github.com/U-Said/LiteSwitcher">Source code</a>
+        <a href="https://github.com/U-Said/LiteSwitcher/releases">All versions</a>
+        <a href="https://github.com/U-Said/LiteSwitcher/issues">Issues</a>
+      </nav>
+    </div>
+    <p class="tm">FastRevers is a trademark of U-Said. Windows, Surface and Copilot are trademarks of the Microsoft group of companies. Mac, macOS, iPhone and iPad are trademarks of Apple Inc., registered in the U.S. and other countries and regions. Android is a trademark of Google LLC. Linux® is the registered trademark of Linus Torvalds in the U.S. and other countries. Snapdragon is a trademark of Qualcomm Incorporated. Other names are trademarks of their respective owners. FastRevers is an independent product, not affiliated with, endorsed or sponsored by any of them.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var REPO = 'U-Said/LiteSwitcher';
+  var DL = 'https://github.com/' + REPO + '/releases/latest/download/';
+  // The latest release, written into the page: the visitor's browser does not ask GitHub for it.
+  // After a new release update the tag and the sizes (gh release view --repo U-Said/LiteSwitcher --json tagName,assets)
+  // and publish the page again. The download links go to releases/latest and need no change.
+  var release = { tag: 'v2.1.0', sizes: { 'LiteSwitcher-Windows.zip': 192689, 'LiteSwitcher-Windows-arm64.zip': 177666, 'LiteSwitcher-macOS.zip': 287709 } };
+  var OS_PATH = {
+    windows: 'M3 4h18a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-7v2h3v2H7v-2h3v-2H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2v9h16V6H4z',
+    mac: 'M5 5h14a1 1 0 0 1 1 1v9H4V6a1 1 0 0 1 1-1zm1 2v6h12V7H6zM2 16.5h20v1.5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1.5z'
+  };
+  var BUILDS = {
+    'win-x64': { os: 'windows', name: 'Windows', file: 'LiteSwitcher-Windows.zip', req: 'Windows 10 and 11 · Intel and AMD (x64)', steps: [
+      'Unzip the archive into any folder you like and run <code>LiteSwitcher.exe</code>. No admin rights are needed.',
+      'If Windows says “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>: the app is not signed with a paid certificate yet.',
+      'Its icon appears next to the clock. To start it automatically, tick <b>Start with Windows</b> in its menu.'
+    ] },
+    'win-arm64': { os: 'windows', name: 'Windows on Arm', file: 'LiteSwitcher-Windows-arm64.zip', req: 'Windows 11 · Snapdragon: Snapdragon PCs, such as Surface Pro and Surface Laptop with Snapdragon', steps: [
+      'Unzip the archive into any folder you like and run <code>LiteSwitcher.exe</code>. No admin rights are needed.',
+      'If Windows says “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>: the app is not signed with a paid certificate yet.',
+      'Its icon appears next to the clock. To start it automatically, tick <b>Start with Windows</b> in its menu.'
+    ] },
+    'mac': { os: 'mac', name: 'macOS', file: 'LiteSwitcher-macOS.zip', req: 'macOS 11 or later · Apple silicon and Intel', steps: [
+      'Unzip <code>LiteSwitcher-macOS.zip</code> and drag <b>LiteSwitcher.app</b> to <b>Applications</b>.',
+      'Open LiteSwitcher. It is not notarized by Apple yet, so macOS blocks the first launch: open <b>System Settings → Privacy &amp; Security</b> and click <b>Open Anyway</b> at the bottom (on macOS 14 and older: Control-click the app → <b>Open</b>).',
+      'Allow LiteSwitcher in <b>Privacy &amp; Security → Accessibility</b>. A few seconds later its menu bar icon turns solid and it is working. To start it automatically, tick <b>Open at login</b> in its menu.'
+    ], tip: 'The macOS version is built and passes automated checks on a Mac, but has not been tried by hand on a real Mac yet. If something misbehaves, please open an <a href="https://github.com/U-Said/LiteSwitcher/issues">issue</a>.' }
+  };
+  var ORDER = ['win-x64', 'win-arm64', 'mac'];
+  var ICON_DL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 4h2v9.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V4zM5 18h14v2H5z"/></svg>';
+  var card = document.getElementById('dl-card');
+  var detected = null, chosen = null, note = '';
+
+  function mb(n) { return n ? (n < 1048576 ? (n / 1048576).toFixed(1).replace(/^0\.0$/, '0.1') : (n / 1048576).toFixed(1)) + ' MB' : ''; }
+  function icon(os) { return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="' + OS_PATH[os] + '"/></svg>'; }
+
+  function render() {
+    var id = chosen || detected, b = id && BUILDS[id], h = '';
+    if (b) {
+      h += '<div class="for">' + icon(b.os) + '<span>' + (chosen ? '' : 'Your system: ') + '<b>' + b.name + '</b></span></div>';
+      h += '<div class="btns"><a class="btn primary" href="' + DL + b.file + '">' + ICON_DL + 'Download for ' + b.name + '</a></div>';
+      h += '<p class="meta">' + b.req + ' · ZIP, ' + mb(release.sizes[b.file]) + ' · version ' + release.tag.replace(/^v/, '') + '</p>';
+      h += '<ol class="steps">' + b.steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol>';
+      if (b.tip) h += '<div class="tip">' + b.tip + '</div>';
+    } else {
+      h += '<p class="msg">' + (note || 'FastRevers is for Windows and macOS. Choose a system:') + '</p>';
+    }
+    h += '<div class="other"><span class="lbl">' + (b ? 'Other systems:' : '') + '</span>' + ORDER.map(function (k) {
+      return '<a href="#dl" data-b="' + k + '" class="' + (k === id ? 'on' : '') + '">' + BUILDS[k].name + '</a>';
+    }).join('') + '</div>';
+    card.innerHTML = h;
+  }
+
+  card.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-b]');
+    if (!a) return;
+    e.preventDefault();
+    chosen = a.getAttribute('data-b');
+    render();
+  });
+
+  var ua = navigator.userAgent || '', p = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
+  if (/Android|iPhone|iPad/i.test(ua)) note = 'FastRevers is for computers with Windows or macOS. Open this page there, or choose a system:';
+  else if (/Win/i.test(p) || /Windows/i.test(ua)) detected = /ARM64|aarch64/i.test(ua) ? 'win-arm64' : 'win-x64';
+  else if (/Mac/i.test(p)) detected = 'mac';
+  else if (/Linux/i.test(p)) note = 'FastRevers is for Windows and macOS; there is no Linux version. Choose a system:';
+  render();
+  // Windows on Arm tells about itself only through the client hints.
+  if (detected === 'win-x64' && navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+    navigator.userAgentData.getHighEntropyValues(['architecture']).then(function (v) {
+      if (v.architecture === 'arm' && !chosen) { detected = 'win-arm64'; render(); }
+    }, function () {});
+  }
+})();
+</script>
+</body>
+</html>
