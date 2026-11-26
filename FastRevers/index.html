@@ -6,9 +6,9 @@
 <title>FastRevers — free keyboard layout switcher for Russian and English on Windows and macOS (formerly LiteSwitcher)</title>
 <meta name="description" content="Typed ghbdtn instead of привет? FastRevers retypes the word in the right keyboard layout and switches it. A tiny free app for Windows (x64 and Arm64) and macOS. Open source, no installer.">
 <link rel="canonical" href="https://u-said.github.io/FastRevers/">
-<link rel="icon" type="image/png" sizes="32x32" href="img/ls-32.png">
-<link rel="icon" type="image/png" sizes="128x128" href="img/ls-128.png">
-<link rel="apple-touch-icon" href="img/ls-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/fr-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="img/fr-128.png">
+<link rel="apple-touch-icon" href="img/fr-192.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FastRevers">
 <meta property="og:url" content="https://u-said.github.io/FastRevers/">
@@ -40,7 +40,7 @@
       "isAccessibleForFree": true,
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "license": "https://opensource.org/licenses/MIT",
-      "image": "https://u-said.github.io/FastRevers/img/ls-256.png",
+      "image": "https://u-said.github.io/FastRevers/img/fr-256.png",
       "screenshot": "https://u-said.github.io/FastRevers/img/demo-en.png",
       "downloadUrl": "https://github.com/U-Said/FastRevers/releases/latest",
       "publisher": { "@type": "Person", "name": "U-Said" },
@@ -101,6 +101,9 @@ kbd { font: 600 0.85em/1 ui-monospace, "Cascadia Mono", Consolas, Menlo, monospa
 h1 { font-size: clamp(1.9rem, 4.2vw, 3rem); line-height: 1.12; letter-spacing: -0.015em; font-weight: 700; margin: 0 auto 16px; max-width: 17em; }
 .lead { font-size: 1.2rem; color: var(--muted); max-width: 42em; margin: 0 auto; }
 .shot { margin: 36px auto 0; max-width: 900px; }
+/* The «tablo FR» icon over the heading: FR → RF → FR (a still picture when motion is reduced). */
+.tablo { display: block; margin: -24px auto -20px; }
+.tablo img { display: block; margin: 0 auto; width: 180px; height: 180px; }
 .shot figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); }
 .renamed { max-width: 42em; margin: 16px auto 0; padding: 10px 14px; border-radius: 12px; background: var(--mark); border-left: 4px solid var(--accent); font-size: 15px; text-align: left; }
 .brand .tm-mark { align-self: flex-start; margin: 1px 0 0 -9px; font-size: 10px; font-weight: 600; color: var(--muted); }
@@ -168,7 +171,7 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
 </head>
 <body>
 <header class="bar"><div class="wrap top">
-  <a class="brand" href="./"><img src="img/ls-128.png" alt="">FastRevers<sup class="tm-mark" aria-hidden="true">™</sup></a>
+  <a class="brand" href="./"><img src="img/fr-128.png" alt="">FastRevers<sup class="tm-mark" aria-hidden="true">™</sup></a>
   <nav class="nav">
     <a class="cta" href="#dl">Download</a>
     <a class="hide-s" href="#how">How it works</a>
@@ -178,6 +181,7 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
 
 <main>
   <section class="wrap hero">
+    <picture class="tablo"><source srcset="img/fr-256.png" media="(prefers-reduced-motion: reduce)"><img src="img/fastrevers-tablo.gif" width="180" height="180" alt="The FastRevers icon: the letters FR turn over to RF and back"></picture>
     <p class="kicker">Keyboard layout switcher for Russian and English</p>
     <h1>Typed in the wrong layout? FastRevers fixes it</h1>
     <p class="lead">Typed <code>ghbdtn</code> when you meant «привет»? FastRevers notices it when you press Space, retypes the word and switches the layout. One small app for Windows and macOS: download, unzip, run.</p>
@@ -257,7 +261,7 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
   // The latest release, written into the page: the visitor's browser does not ask GitHub for it.
   // After a new release update the tag and the sizes (gh release view --repo U-Said/FastRevers --json tagName,assets)
   // and publish the page again. The download links go to releases/latest and need no change.
-  var release = { tag: 'v2.2.0', sizes: { 'FastRevers-Windows.zip': 196940, 'FastRevers-Windows-arm64.zip': 182527, 'FastRevers-macOS.zip': 289917 } };
+  var release = { tag: 'v2.2.1', sizes: { 'FastRevers-Windows.zip': 259351, 'FastRevers-Windows-arm64.zip': 245074, 'FastRevers-macOS.zip': 1293494 } };
   var OS_PATH = {
     windows: 'M3 4h18a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-7v2h3v2H7v-2h3v-2H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2v9h16V6H4z',
     mac: 'M5 5h14a1 1 0 0 1 1 1v9H4V6a1 1 0 0 1 1-1zm1 2v6h12V7H6zM2 16.5h20v1.5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1.5z'
