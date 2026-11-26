@@ -42,9 +42,9 @@
       "license": "https://opensource.org/licenses/MIT",
       "image": "https://u-said.github.io/FastRevers/img/ls-256.png",
       "screenshot": "https://u-said.github.io/FastRevers/img/demo-en.png",
-      "downloadUrl": "https://github.com/U-Said/LiteSwitcher/releases/latest",
+      "downloadUrl": "https://github.com/U-Said/FastRevers/releases/latest",
       "publisher": { "@type": "Person", "name": "U-Said" },
-      "sameAs": ["https://github.com/U-Said/LiteSwitcher"]
+      "sameAs": ["https://github.com/U-Said/FastRevers"]
     }
   ]
 }
@@ -172,7 +172,7 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
   <nav class="nav">
     <a class="cta" href="#dl">Download</a>
     <a class="hide-s" href="#how">How it works</a>
-    <a class="hide-s" href="https://github.com/U-Said/LiteSwitcher">GitHub</a>
+    <a class="hide-s" href="https://github.com/U-Said/FastRevers">GitHub</a>
   </nav>
 </div></header>
 
@@ -181,17 +181,17 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
     <p class="kicker">Keyboard layout switcher for Russian and English</p>
     <h1>Typed in the wrong layout? FastRevers fixes it</h1>
     <p class="lead">Typed <code>ghbdtn</code> when you meant «привет»? FastRevers notices it when you press Space, retypes the word and switches the layout. One small app for Windows and macOS: download, unzip, run.</p>
-    <p class="renamed"><b>FastRevers is the new name of LiteSwitcher.</b> Version 2.1.0 still uses the old name in its files, its menu and its settings; the next release will be called FastRevers.</p>
-    <figure class="shot"><img src="img/demo-en.png" width="1200" height="560" alt="Version 2.1.0, still named LiteSwitcher, turns ghbdtn into привет and руддщ into hello; its tray menu"><figcaption>Version 2.1.0 is still called LiteSwitcher.</figcaption></figure>
+    <p class="renamed"><b>FastRevers is the new name of LiteSwitcher.</b> Since version 2.2 the app is called FastRevers and takes over the settings, exceptions and autostart of LiteSwitcher by itself.</p>
+    <figure class="shot"><img src="img/demo-en.png" width="1200" height="560" alt="FastRevers turns ghbdtn into привет and руддщ into hello; its tray menu"></figure>
   </section>
 
   <section class="wrap block" id="dl">
     <div class="card" id="dl-card">
       <noscript>
         <div class="btns">
-          <a class="btn soft" href="https://github.com/U-Said/LiteSwitcher/releases/latest/download/LiteSwitcher-Windows.zip">Windows (x64)</a>
-          <a class="btn soft" href="https://github.com/U-Said/LiteSwitcher/releases/latest/download/LiteSwitcher-Windows-arm64.zip">Windows on Arm</a>
-          <a class="btn soft" href="https://github.com/U-Said/LiteSwitcher/releases/latest/download/LiteSwitcher-macOS.zip">macOS</a>
+          <a class="btn soft" href="https://github.com/U-Said/FastRevers/releases/latest/download/FastRevers-Windows.zip">Windows (x64)</a>
+          <a class="btn soft" href="https://github.com/U-Said/FastRevers/releases/latest/download/FastRevers-Windows-arm64.zip">Windows on Arm</a>
+          <a class="btn soft" href="https://github.com/U-Said/FastRevers/releases/latest/download/FastRevers-macOS.zip">macOS</a>
         </div>
       </noscript>
     </div>
@@ -213,8 +213,8 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
   <section class="wrap block" id="privacy">
     <h2>What it keeps, and where</h2>
     <div class="prose">
-      <p>Keystrokes are kept <b>in memory only, for the current word</b>. On disk FastRevers writes only its own data: its settings (<code>LiteSwitcher.ini</code> on Windows, the app’s preferences on a Mac), the exceptions file <code>exceptions.txt</code>, where words whose fix you undid are added as plain text, and the start-at-login entry if you turn it on.</p>
-      <p>It sends nothing over the network: <b>there is no network code</b>, and a browser opens only from the “Support the project…” menu item. To convert selected text, FastRevers copies it via the clipboard, like <kbd>Ctrl</kbd>+<kbd>C</kbd>, and then restores the previous contents. If Windows clipboard history (<kbd>Win</kbd>+<kbd>V</kbd>) or its sync is on, the copied fragment may be saved there (on a Mac, in clipboard managers); the converted text is marked so that it is not.</p>
+      <p>Keystrokes are kept <b>in memory only, for the current word</b>. On disk FastRevers writes only its own data: its settings (<code>FastRevers.ini</code> on Windows, the app’s preferences on a Mac), the exceptions file <code>exceptions.txt</code>, where words whose fix you undid are added as plain text, and the start-at-login entry if you turn it on.</p>
+      <p>It sends nothing over the network: <b>there is no network code</b>, and a browser opens only from the “Privacy…” and “Support the project (lava.top)…” menu items. To convert selected text, FastRevers copies it via the clipboard, like <kbd>Ctrl</kbd>+<kbd>C</kbd>, and then restores the previous contents. If Windows clipboard history (<kbd>Win</kbd>+<kbd>V</kbd>) or its sync is on, the copied fragment may be saved there (on a Mac, in clipboard managers); the converted text is marked so that it is not.</p>
       <p>Password fields: macOS hides their keystrokes from FastRevers. On Windows FastRevers skips classic password boxes; it cannot detect password fields in browsers, but a word is only fixed after Space, and passwords rarely contain spaces.</p>
     </div>
   </section>
@@ -223,12 +223,12 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
     <h2>Questions</h2>
     <div class="faq">
       <details><summary>Which layouts does it work with?</summary><p>Russian and English. On a Mac you need an English input source (ABC or U.S.) and Russian or Russian – PC.</p></details>
-      <details><summary>Is FastRevers free?</summary><p>Yes. It is free, has no ads, and its source code is open under the MIT license on <a href="https://github.com/U-Said/LiteSwitcher">GitHub</a>.</p></details>
+      <details><summary>Is FastRevers free?</summary><p>Yes. It is free, has no ads, and its source code is open under the MIT license on <a href="https://github.com/U-Said/FastRevers">GitHub</a>.</p></details>
       <details><summary>Will it fix every word?</summary><p>No. There is no dictionary, so misses and false positives are possible. Fix a missed word with a double Shift; undo a wrong fix the same way, and the word goes to the exceptions.</p></details>
       <details><summary>Does it run on Windows on Arm?</summary><p>Yes. There is a native Arm64 build for Windows 11 on Snapdragon PCs, such as the Snapdragon models of Surface Pro and Surface Laptop.</p></details>
       <details><summary>Does it need admin rights?</summary><p>No. On Windows it runs from any folder you choose. On a Mac it needs your permission in Privacy &amp; Security → Accessibility to see the keys you type.</p></details>
       <details><summary>Is there a version for Linux, Android or iPhone?</summary><p>Not at the moment: FastRevers is for Windows and macOS.</p></details>
-      <details><summary>Something does not work as it should.</summary><p>Please tell us in <a href="https://github.com/U-Said/LiteSwitcher/issues">GitHub Issues</a>.</p></details>
+      <details><summary>Something does not work as it should.</summary><p>Please tell us in <a href="https://github.com/U-Said/FastRevers/issues">GitHub Issues</a>.</p></details>
     </div>
   </section>
 </main>
@@ -238,9 +238,11 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
     <div class="row">
       <span>© 2026 U-Said · MIT license</span>
       <nav>
-        <a href="https://github.com/U-Said/LiteSwitcher">Source code</a>
-        <a href="https://github.com/U-Said/LiteSwitcher/releases">All versions</a>
-        <a href="https://github.com/U-Said/LiteSwitcher/issues">Issues</a>
+        <a href="https://github.com/U-Said/FastRevers">Source code</a>
+        <a href="https://github.com/U-Said/FastRevers/releases">All versions</a>
+        <a href="https://github.com/U-Said/FastRevers/issues">Issues</a>
+        <a href="https://github.com/U-Said/FastRevers/blob/main/PRIVACY.md#privacy-policy">Privacy</a>
+        <a href="https://github.com/U-Said/FastRevers/blob/main/SECURITY.md#security-policy">Security</a>
       </nav>
     </div>
     <p class="tm">FastRevers is a trademark of U-Said. Windows, Surface and Copilot are trademarks of the Microsoft group of companies. Mac, macOS, iPhone and iPad are trademarks of Apple Inc., registered in the U.S. and other countries and regions. Android is a trademark of Google LLC. Linux® is the registered trademark of Linus Torvalds in the U.S. and other countries. Snapdragon is a trademark of Qualcomm Incorporated. Other names are trademarks of their respective owners. FastRevers is an independent product, not affiliated with, endorsed or sponsored by any of them.</p>
@@ -250,32 +252,32 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
 <script>
 (function () {
   'use strict';
-  var REPO = 'U-Said/LiteSwitcher';
+  var REPO = 'U-Said/FastRevers';
   var DL = 'https://github.com/' + REPO + '/releases/latest/download/';
   // The latest release, written into the page: the visitor's browser does not ask GitHub for it.
-  // After a new release update the tag and the sizes (gh release view --repo U-Said/LiteSwitcher --json tagName,assets)
+  // After a new release update the tag and the sizes (gh release view --repo U-Said/FastRevers --json tagName,assets)
   // and publish the page again. The download links go to releases/latest and need no change.
-  var release = { tag: 'v2.1.0', sizes: { 'LiteSwitcher-Windows.zip': 192689, 'LiteSwitcher-Windows-arm64.zip': 177666, 'LiteSwitcher-macOS.zip': 287709 } };
+  var release = { tag: 'v2.2.0', sizes: { 'FastRevers-Windows.zip': 196940, 'FastRevers-Windows-arm64.zip': 182527, 'FastRevers-macOS.zip': 289917 } };
   var OS_PATH = {
     windows: 'M3 4h18a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-7v2h3v2H7v-2h3v-2H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2v9h16V6H4z',
     mac: 'M5 5h14a1 1 0 0 1 1 1v9H4V6a1 1 0 0 1 1-1zm1 2v6h12V7H6zM2 16.5h20v1.5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1.5z'
   };
   var BUILDS = {
-    'win-x64': { os: 'windows', name: 'Windows', file: 'LiteSwitcher-Windows.zip', req: 'Windows 10 and 11 · Intel and AMD (x64)', steps: [
-      'Unzip the archive into any folder you like and run <code>LiteSwitcher.exe</code>. No admin rights are needed.',
+    'win-x64': { os: 'windows', name: 'Windows', file: 'FastRevers-Windows.zip', req: 'Windows 10 and 11 · Intel and AMD (x64)', steps: [
+      'Unzip the archive into a folder that is not synced to the cloud, for example <code>%LOCALAPPDATA%\\Programs\\FastRevers</code>, and run <code>FastRevers.exe</code>. No admin rights are needed.',
       'If Windows says “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>: the app is not signed with a paid certificate yet.',
       'Its icon appears next to the clock. To start it automatically, tick <b>Start with Windows</b> in its menu.'
-    ] },
-    'win-arm64': { os: 'windows', name: 'Windows on Arm', file: 'LiteSwitcher-Windows-arm64.zip', req: 'Windows 11 · Snapdragon: Snapdragon PCs, such as Surface Pro and Surface Laptop with Snapdragon', steps: [
-      'Unzip the archive into any folder you like and run <code>LiteSwitcher.exe</code>. No admin rights are needed.',
+    ], tip: 'Coming from LiteSwitcher? Put <code>FastRevers.exe</code> into the folder with <code>LiteSwitcher.exe</code> and run it: FastRevers closes the old version and takes over its settings, exceptions and autostart.' },
+    'win-arm64': { os: 'windows', name: 'Windows on Arm', file: 'FastRevers-Windows-arm64.zip', req: 'Windows 11 · Snapdragon: Snapdragon PCs, such as Surface Pro and Surface Laptop with Snapdragon', steps: [
+      'Unzip the archive into a folder that is not synced to the cloud, for example <code>%LOCALAPPDATA%\\Programs\\FastRevers</code>, and run <code>FastRevers.exe</code>. No admin rights are needed.',
       'If Windows says “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>: the app is not signed with a paid certificate yet.',
       'Its icon appears next to the clock. To start it automatically, tick <b>Start with Windows</b> in its menu.'
-    ] },
-    'mac': { os: 'mac', name: 'macOS', file: 'LiteSwitcher-macOS.zip', req: 'macOS 11 or later · Apple silicon and Intel', steps: [
-      'Unzip <code>LiteSwitcher-macOS.zip</code> and drag <b>LiteSwitcher.app</b> to <b>Applications</b>.',
-      'Open LiteSwitcher. It is not notarized by Apple yet, so macOS blocks the first launch: open <b>System Settings → Privacy &amp; Security</b> and click <b>Open Anyway</b> at the bottom (on macOS 14 and older: Control-click the app → <b>Open</b>).',
-      'Allow LiteSwitcher in <b>Privacy &amp; Security → Accessibility</b>. A few seconds later its menu bar icon turns solid and it is working. To start it automatically, tick <b>Open at login</b> in its menu.'
-    ], tip: 'The macOS version is built and passes automated checks on a Mac, but has not been tried by hand on a real Mac yet. If something misbehaves, please open an <a href="https://github.com/U-Said/LiteSwitcher/issues">issue</a>.' }
+    ], tip: 'Coming from LiteSwitcher? Put <code>FastRevers.exe</code> into the folder with <code>LiteSwitcher.exe</code> and run it: FastRevers closes the old version and takes over its settings, exceptions and autostart.' },
+    'mac': { os: 'mac', name: 'macOS', file: 'FastRevers-macOS.zip', req: 'macOS 11 or later · Apple silicon and Intel', steps: [
+      'Unzip <code>FastRevers-macOS.zip</code> and drag <b>FastRevers.app</b> to <b>Applications</b>.',
+      'Open FastRevers. It is not notarized by Apple yet, so macOS blocks the first launch: open <b>System Settings → Privacy &amp; Security</b> and click <b>Open Anyway</b> at the bottom (on macOS 14 and older: Control-click the app → <b>Open</b>).',
+      'Allow FastRevers in <b>Privacy &amp; Security → Accessibility</b>. A few seconds later its menu bar icon turns solid and it is working. To start it automatically, tick <b>Open at login</b> in its menu.'
+    ], tip: 'The macOS version is built and passes automated checks on a Mac, but has not been tried by hand on a real Mac yet. If something misbehaves, please open an <a href="https://github.com/U-Said/FastRevers/issues">issue</a>.' }
   };
   var ORDER = ['win-x64', 'win-arm64', 'mac'];
   var ICON_DL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 4h2v9.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V4zM5 18h14v2H5z"/></svg>';
@@ -290,7 +292,7 @@ footer .tm { margin: 16px 0 0; font-size: 12.5px; line-height: 1.5; }
     if (b) {
       h += '<div class="for">' + icon(b.os) + '<span>' + (chosen ? '' : 'Your system: ') + '<b>' + b.name + '</b></span></div>';
       h += '<div class="btns"><a class="btn primary" href="' + DL + b.file + '">' + ICON_DL + 'Download for ' + b.name + '</a></div>';
-      h += '<p class="meta">' + b.req + ' · ZIP, ' + mb(release.sizes[b.file]) + ' · version ' + release.tag.replace(/^v/, '') + '</p>';
+      h += '<p class="meta">' + b.req + ' · ZIP, ' + mb(release.sizes[b.file]) + ' · version ' + release.tag.replace(/^v/, '') + ' · <a href="' + DL + 'SHA256SUMS.txt">SHA-256</a></p>';
       h += '<ol class="steps">' + b.steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol>';
       if (b.tip) h += '<div class="tip">' + b.tip + '</div>';
     } else {
